@@ -1,4 +1,4 @@
-## Laravel PagSeguro - 1.0.6
+## VWNUNES | Laravel PagSeguro
 
 
 O laravel-pagseguro consome a API do PagSeguro e prove uma forma 

@@ -18,7 +18,7 @@ class XmlAcceptedPaymentMethodTest extends \PHPUnit_Framework_TestCase
 
     protected function getXmlForParseTest()
     {
-        $str =  "<acceptedPaymentMethod>".
+        $str =  "<acceptedPaymentMethods>".
                     "<include>".
                         "<paymentMethod>".
                             "<group>CREDIT_CARD</group>".
@@ -29,31 +29,31 @@ class XmlAcceptedPaymentMethodTest extends \PHPUnit_Framework_TestCase
                             "<group>BOLETO</group>".
                         "</paymentMethod>".
                     "</exclude>".
-                "</acceptedPaymentMethod>";
+                "</acceptedPaymentMethods>";
         return $str;
     }
 
     protected function getXmlForParseIncludeTest()
     {
-        $str =  "<acceptedPaymentMethod>".
+        $str =  "<acceptedPaymentMethods>".
                     "<include>".
                         "<paymentMethod>".
                             "<group>CREDIT_CARD</group>".
                         "</paymentMethod>".
                     "</include>".
-                "</acceptedPaymentMethod>";
+                "</acceptedPaymentMethods>";
         return $str;
     }
 
     protected function getXmlForParseExcludeTest()
     {
-        $str =  "<acceptedPaymentMethod>".
+        $str =  "<acceptedPaymentMethods>".
                     "<exclude>".
                         "<paymentMethod>".
                             "<group>BOLETO</group>".
                         "</paymentMethod>".
                     "</exclude>".
-                "</acceptedPaymentMethod>";
+                "</acceptedPaymentMethods>";
         return $str;
     }
 
@@ -64,7 +64,7 @@ class XmlAcceptedPaymentMethodTest extends \PHPUnit_Framework_TestCase
                 'group' => 'CREDIT_CARD'
             ])
         ]);
-        $exclude = new IncludeTag([
+        $exclude = new ExcludeTag([
             'paymentMethod' => new PaymentMethod([
                 'group' => 'BOLETO'
             ])
@@ -97,7 +97,7 @@ class XmlAcceptedPaymentMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParseExclude()
     {
-        $exclude = new IncludeTag([
+        $exclude = new ExcludeTag([
             'paymentMethod' => new PaymentMethod([
                 'group' => 'BOLETO'
             ])

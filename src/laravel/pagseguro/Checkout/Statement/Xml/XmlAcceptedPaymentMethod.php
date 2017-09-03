@@ -29,10 +29,10 @@ class XmlAcceptedPaymentMethod implements XmlPartInterface
      */
     public function getXmlString()
     {
-        return '<acceptedPaymentMethod>'.
+        return '<acceptedPaymentMethods>'.
                     $this->getIncludeXmlString().
                     $this->getExcludeXmlString().
-                '</acceptedPaymentMethod>';
+                '</acceptedPaymentMethods>';
     }
 
     /**
@@ -55,7 +55,7 @@ class XmlAcceptedPaymentMethod implements XmlPartInterface
     {
         if ($this->acceptedPaymentMethod->getExclude()) {
             $xmlExclude = new XmlExclude($this->acceptedPaymentMethod->getExclude());
-            return $xmlInclude->getXmlString();
+            return $xmlExclude->getXmlString();
         }
         return '';
     }
