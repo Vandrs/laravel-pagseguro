@@ -16,7 +16,7 @@ class PaymentMethodConfig implements PaymentMethodConfigInterface
     /**
      * @var ConfigCollection $configColletion
      */
-    protected $configColletion;
+    protected $configCollection;
 
     /**
      * @var PaymentMethodInterface $paymentMethod
