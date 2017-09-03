@@ -2,7 +2,7 @@
 
 namespace laravel\pagseguro\Checkout\Statement\Xml;
 
-use laravel\pagseguro\AcceptedPaymentMethod\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
 
 /**
  * Checkout Statement Xml AcceptedPaymentMethod
