@@ -10,6 +10,15 @@ use laravel\pagseguro\Sender\Sender;
 use laravel\pagseguro\Sender\SenderInterface;
 use laravel\pagseguro\Shipping\Shipping;
 use laravel\pagseguro\Shipping\ShippingInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\AcceptedPaymentMethod;
+use laravel\pagseguro\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\IncludeTag\IncludeTag;
+use laravel\pagseguro\AcceptedPaymentMethod\IncludeTag\IncludeTagInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTag;
+use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTagInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\PaymentMethod\PaymentMethod;
+use laravel\pagseguro\AcceptedPaymentMethod\PaymentMethod\PaymentMethodInterface;
+
 
 /**
  * Checkout Data Facade
@@ -42,6 +51,9 @@ class DataFacade
         }
         if (array_key_exists('shipping', $data)) {
             $data['shipping'] = $this->ensureShippingInstance($data['shipping']);
+        }
+        if (array_key_exists('acceptedPaymentMethod', $data)) {
+            $data['acceptedPaymentMethod'] = $this->ensurePaymentMethodInstance($data['acceptedPaymentMethod']);
         }
         return $data;
     }
@@ -109,5 +121,57 @@ class DataFacade
             $shipping['address'] = new Address($shipping['address']);
         }
         return new Shipping($shipping);
+    }
+
+    /**
+     * @param array|AcceptedPaymentMethod
+     * @return AcceptPaymentMethodInterface
+     */
+    private function ensurePaymentMethodInstance($acceptedPaymentMethod)
+    {
+        if ($acceptedPaymentMethod instanceof PaymentMethodInterface) {
+            return $acceptedPaymentMethod;
+        }
+        if (!is_array($acceptedPaymentMethod)) {
+            throw new \InvalidArgumentException('Invalid AcceptedPaymentMethod');
+        }
+        if (array_key_exists('include', $acceptedPaymentMethod)) {
+            $acceptedPaymentMethod['include'] = $this->ensureIncludeInstance($acceptedPaymentMethod['include']);
+        }
+        if (array_key_exists('exclude', $acceptedPaymentMethod)) {
+            $acceptedPaymentMethod['exclude'] = $this->ensureExcludeInstance($acceptedPaymentMethod['exclude']);
+        }
+        return new AcceptedPaymentMethod($acceptedPaymentMethod);
+    }
+
+    /**
+     * @param array|IncludeTagInterface $include
+     */
+    private function ensureIncludeInstance($include)
+    {
+        if ($include instanceof IncludeTagInterface) {
+            return $include;
+        }
+        if (!is_array($include)) {
+            throw new \InvalidArgumentException('Invalid Include');
+        }
+        if (array_key_exists('paymentMethod', $include) && is_array($include['paymentMethod'])) {
+            $include['paymentMethod'] = new PaymentMethod($include['paymentMethod']);
+        }
+        return new IncludeTag($include);
+    }
+
+    private function ensureExcludeInstance($exclude)
+    {
+        if ($exclude instanceof ExcludeTagInterface) {
+            return $exclude;
+        }
+        if (!is_array($exclude)) {
+            throw new \InvalidArgumentException('Invalid Exclude');
+        }
+        if (array_key_exists('paymentMethod', $exclude) && is_array($exclude['paymentMethod'])) {
+            $exclude['paymentMethod'] = new PaymentMethod($exclude['paymentMethod']);
+        }
+        return new ExcludeTag($exclude);
     }
 }

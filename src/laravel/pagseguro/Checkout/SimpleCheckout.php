@@ -8,6 +8,9 @@ use laravel\pagseguro\Receiver\ReceiverInterface;
 use laravel\pagseguro\Sender\SenderInterface;
 use laravel\pagseguro\Shipping\ShippingInterface;
 use laravel\pagseguro\Remote\Checkout as RemoteCheckout;
+use laravel\pagseguro\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\IncludeTag\IncludeTagInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTagInterface;
 
 /**
  * Simple Checkout Object
@@ -48,6 +51,12 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
      * @var ReceiverInterface
      */
     protected $receiver;
+
+    /**
+     * @var AcceptPaymentMethodInterface
+     */
+    protected $acceptedPaymentMethod;
+
 
     /**
      * @return SenderInterface
@@ -145,6 +154,25 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
             throw new \InvalidArgumentException('Invalid Shipping');
         }
         $this->shipping = $shipping;
+        return $this;
+    }
+
+
+    /**
+     * @return AcceptPaymentMethodInterface;
+     */
+    public function getAcceptedPaymentMethod()
+    {
+        return $this->acceptedPaymentMethod;
+    }
+
+    /**
+     * @param AcceptPaymentMethodInterface $acceptPaymentMethodInterface
+     * @return SimpleCheckout
+     */
+    protected function setAcceptedPaymentMethod(AcceptPaymentMethodInterface $acceptPaymentMethodInterface)
+    {
+        $this->acceptedPaymentMethod = $acceptPaymentMethodInterface;
         return $this;
     }
 

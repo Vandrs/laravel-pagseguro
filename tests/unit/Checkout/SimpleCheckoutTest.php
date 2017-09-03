@@ -126,4 +126,21 @@ class SimpleCheckoutTest extends CheckoutBase
         $this->assertEquals('BRA', $address->getCountry());
         $this->assertNull($address->getComplement());
     }
+
+    public function testAcceptedPaymentMethod()
+    {
+        $acceptedPaymentMethod = $this->checkout->getAcceptedPaymentMethod();
+        $paymentMethodClass = 'laravel\\pagseguro\\AcceptedPaymentMethod\\AcceptedPaymentMethod';
+        $includeClass = 'laravel\\pagseguro\\AcceptedPaymentMethod\\IncludeTag\\IncludeTag';
+        $excludeClass = 'laravel\\pagseguro\\AcceptedPaymentMethod\\ExcludeTag\\ExcludeTag';
+        $paymenyMethodClass = 'laravel\\pagseguro\\AcceptedPaymentMethod\\PaymentMethod\\PaymentMethod';
+        $groupOptions = ['CREDIT_CARD','BOLETO'];
+        $this->assertInstanceOf($paymentMethodClass, $acceptedPaymentMethod);
+        $this->assertInstanceOf($includeClass, $acceptedPaymentMethod->getInclude());
+        $this->assertInstanceOf($excludeClass, $acceptedPaymentMethod->getExclude());
+        $this->assertInstanceOf($paymenyMethodClass, $acceptedPaymentMethod->getInclude()->getPaymentMethod());
+        $this->assertInstanceOf($paymenyMethodClass, $acceptedPaymentMethod->getExclude()->getPaymentMethod());
+        $this->assertTrue(in_array($acceptedPaymentMethod->getInclude()->getPaymentMethod()->getGroup(), $groupOptions));
+        $this->assertTrue(in_array($acceptedPaymentMethod->getExclude()->getPaymentMethod()->getGroup(), $groupOptions));
+    }
 }

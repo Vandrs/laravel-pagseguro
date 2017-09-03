@@ -26,6 +26,7 @@ class CheckoutBase extends \PHPUnit_Framework_TestCase
             'items' => $this->getItems(),
             'sender' => $this->getSender(),
             'shipping' => $this->getShipping(),
+            'acceptedPaymentMethod' => $this->getAcceptedPaymentMethod(),
             'redirectURL' => 'http://www.meusite.com.br',
             'notificationURL' => 'http://www.meusite.com.br/notification'
         ]);
@@ -87,6 +88,25 @@ class CheckoutBase extends \PHPUnit_Framework_TestCase
             ],
             'type' => 2,
             'cost' => 30.4,
+        ];
+    }
+
+    /**
+     * Get AcceptedPaymentMethod to test
+     */
+    public function getAcceptedPaymentMethod()
+    {
+        return [
+            'include' => [
+                'paymentMethod' => [
+                    'group' => 'CREDIT_CARD'
+                ]
+            ],
+            'exclude' => [
+                'paymentMethod' => [
+                    'group' => 'BOLETO'
+                ]
+            ]
         ];
     }
 }

@@ -63,6 +63,7 @@ class Xml implements StatementInterface
             $this->getShippingXmlString() .
             $this->getConfigXmlString() .
             $this->getMetadataXmlString() .
+            $this->getAcceptedPaymentMethodXmlString()
             '</checkout>';
     }
 
@@ -156,5 +157,15 @@ class Xml implements StatementInterface
     {
         $xmlItems = new XmlMetadata($this->checkout->getMetadata());
         return $xmlItems->getXmlString();
+    }
+
+    private function getAcceptedPaymentMethodXmlString()
+    {
+        $acceptedPaymentMethod =  $this->checkout->getAcceptedPaymentMethod();
+        if (empty($acceptedPaymentMethod)) {
+            return null;
+        }
+        $xmlAcceptedPaymentMethod = new XmlAcceptedPaymentMethod($acceptedPaymentMethod);
+        return $xmlAcceptedPaymentMethod->getXmlString();
     }
 }

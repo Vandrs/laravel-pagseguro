@@ -34,6 +34,7 @@ class ValidationRules implements ValidationRulesInterface
         'maxAge' => 'Integer',
         'maxUses' => 'Integer',
         'metadata' => 'Array',
+        'acceptedPaymentMethod' => 'nullable'
     ];
 
     /**

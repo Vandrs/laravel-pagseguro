@@ -7,6 +7,7 @@ use laravel\pagseguro\Item\ItemCollection;
 use laravel\pagseguro\Receiver\ReceiverInterface;
 use laravel\pagseguro\Sender\SenderInterface;
 use laravel\pagseguro\Shipping\ShippingInterface;
+use laravel\pagseguro\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
 
 /**
  * Checkout Interface
@@ -91,6 +92,13 @@ interface CheckoutInterface
      * @return ShippingInterface
      */
     public function getShipping();
+
+
+    
+    /**
+     * @return AcceptPaymentMethodInterface;
+     */
+    public function getAcceptedPaymentMethod();
 
     /**
      * Send Checkout

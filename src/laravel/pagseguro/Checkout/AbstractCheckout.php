@@ -76,11 +76,12 @@ abstract class AbstractCheckout
     {
         $args = func_get_args();
         $data = null;
+
         $this->hydrateMagic(
             [
                 'items', 'sender', 'shipping', 'currency',
                 'metadata', 'redirectURL', 'notificationURL',
-                'charset'
+                'charset', 'acceptedPaymentMethod'
             ],
             $args
         );
