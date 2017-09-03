@@ -24,7 +24,7 @@
         {
             "name": "Vanderson Nunes",
             "email": "vann.nunes@gmail.com"
-        },
+        }
     ],
     "scripts": {
         "test:unit": "phpunit -c phpunit.xml tests/unit --coverage-html=./tests/phpunit"

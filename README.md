@@ -1,4 +1,4 @@
-## Laravel PagSeguro - 1.0.4
+## Laravel PagSeguro - 1.0.5
 
 
 O laravel-pagseguro consome a API do PagSeguro e prove uma forma 
