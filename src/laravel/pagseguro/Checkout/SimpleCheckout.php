@@ -176,7 +176,7 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
      * @param AcceptPaymentMethodInterface $acceptPaymentMethodInterface
      * @return SimpleCheckout
      */
-    protected function setAcceptedPaymentMethod(AcceptPaymentMethodInterface $acceptPaymentMethodInterface)
+    protected function setAcceptedPaymentMethod(AcceptPaymentMethodInterface $acceptPaymentMethodInterface = null)
     {
         $this->acceptedPaymentMethod = $acceptPaymentMethodInterface;
         return $this;
@@ -194,7 +194,7 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
      * @param PaymentMethodConfigCollection $paymentMethodConfigCollection
      * @return SimpleCheckout
      */
-    protected function setPaymentMethodConfigs(PaymentMethodConfigCollection $paymentMethodConfigCollection)
+    protected function setPaymentMethodConfigs(PaymentMethodConfigCollection $paymentMethodConfigCollection = null)
     {
         $this->paymentMethodConfigs = $paymentMethodConfigCollection;
         return $this;
