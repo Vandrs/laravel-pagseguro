@@ -63,7 +63,7 @@ class Xml implements StatementInterface
             $this->getShippingXmlString() .
             $this->getConfigXmlString() .
             $this->getMetadataXmlString() .
-            $this->getAcceptedPaymentMethodXmlString()
+            $this->getAcceptedPaymentMethodXmlString().
             '</checkout>';
     }
 
