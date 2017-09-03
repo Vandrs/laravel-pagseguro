@@ -143,4 +143,21 @@ class SimpleCheckoutTest extends CheckoutBase
         $this->assertTrue(in_array($acceptedPaymentMethod->getInclude()->getPaymentMethod()->getGroup(), $groupOptions));
         $this->assertTrue(in_array($acceptedPaymentMethod->getExclude()->getPaymentMethod()->getGroup(), $groupOptions));
     }
+
+    public function testPaymentMethodConfigs()
+    {
+        $paymentMethodConfigs = $this->checkout->getPaymentMethodConfigs();
+        $paymentMethodConfigsClass = 'laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfigCollection';
+        $paymentMethodConfigClass  = 'laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfig';
+        $paymenyMethodClass = 'laravel\pagseguro\AcceptedPaymentMethod\PaymentMethod\PaymentMethod';
+        $configCollectionClass = 'laravel\pagseguro\PaymentMethodConfig\Config\ConfigCollection';
+        $configClass = 'laravel\pagseguro\PaymentMethodConfig\Config\Config';
+
+        $this->assertInstanceOf($paymentMethodConfigsClass, $paymentMethodConfigs);
+        $this->assertInstanceOf($paymentMethodConfigClass, $paymentMethodConfigs->offsetGet(0));
+        $this->assertInstanceOf($paymenyMethodClass, $paymentMethodConfigs->offsetGet(0)->getPaymentMethod());
+        $this->assertInstanceOf($configCollectionClass, $paymentMethodConfigs->offsetGet(0)->getConfigCollection());
+        $this->assertInstanceOf($configClass, $paymentMethodConfigs->offsetGet(0)->getConfigCollection()->offsetGet(0));
+        $this->assertEquals('CREDIT_CARD', $paymentMethodConfigs->offsetGet(0)->getPaymentMethod()->getGroup());
+    }
 }

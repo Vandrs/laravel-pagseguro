@@ -11,6 +11,7 @@ use laravel\pagseguro\Remote\Checkout as RemoteCheckout;
 use laravel\pagseguro\AcceptedPaymentMethod\AcceptPaymentMethodInterface;
 use laravel\pagseguro\AcceptedPaymentMethod\IncludeTag\IncludeTagInterface;
 use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTagInterface;
+use laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfigCollection;
 
 /**
  * Simple Checkout Object
@@ -57,7 +58,12 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
      */
     protected $acceptedPaymentMethod;
 
+    /**
+     * @var PaymentMethodConfigCollection
+     */
 
+    protected $paymentMethodConfigs;
+     
     /**
      * @return SenderInterface
      */
@@ -175,6 +181,25 @@ class SimpleCheckout extends AbstractCheckout implements CheckoutInterface
         $this->acceptedPaymentMethod = $acceptPaymentMethodInterface;
         return $this;
     }
+
+    /**
+     * @return PaymentMethodConfigCollection
+     */
+    public function getPaymentMethodConfigs()
+    {
+        return $this->paymentMethodConfigs;
+    }
+
+    /**
+     * @param PaymentMethodConfigCollection $paymentMethodConfigCollection
+     * @return SimpleCheckout
+     */
+    protected function setPaymentMethodConfigs(PaymentMethodConfigCollection $paymentMethodConfigCollection)
+    {
+        $this->paymentMethodConfigs = $paymentMethodConfigCollection;
+        return $this;
+    }
+
 
     /**
      * Send Checkout

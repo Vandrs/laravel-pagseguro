@@ -18,7 +18,12 @@ use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTag;
 use laravel\pagseguro\AcceptedPaymentMethod\ExcludeTag\ExcludeTagInterface;
 use laravel\pagseguro\AcceptedPaymentMethod\PaymentMethod\PaymentMethod;
 use laravel\pagseguro\AcceptedPaymentMethod\PaymentMethod\PaymentMethodInterface;
-
+use laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfigCollection;
+use laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfig;
+use laravel\pagseguro\PaymentMethodConfig\PaymentMethodConfigInterface;
+use laravel\pagseguro\PaymentMethodConfig\Config\ConfigCollection;
+use laravel\pagseguro\PaymentMethodConfig\Config\Config;
+use laravel\pagseguro\PaymentMethodConfig\Config\ConfigInterface;
 
 /**
  * Checkout Data Facade
@@ -54,6 +59,9 @@ class DataFacade
         }
         if (array_key_exists('acceptedPaymentMethod', $data)) {
             $data['acceptedPaymentMethod'] = $this->ensurePaymentMethodInstance($data['acceptedPaymentMethod']);
+        }
+        if (array_key_exists('paymentMethodConfigs', $data)) {
+            $data['paymentMethodConfigs']  = $this->ensurePaymentMethodConfigs($data['paymentMethodConfigs']);
         }
         return $data;
     }
@@ -173,5 +181,26 @@ class DataFacade
             $exclude['paymentMethod'] = new PaymentMethod($exclude['paymentMethod']);
         }
         return new ExcludeTag($exclude);
+    }
+
+    private function ensurePaymentMethodConfigs($paymentMethodConfigs)
+    {   
+        if ($paymentMethodConfigs instanceof PaymentMethodConfigCollection) {
+            return $paymentMethodConfigs;
+        }
+        if (!is_array($paymentMethodConfigs)) {
+            throw new \InvalidArgumentException('Invalid PaymentMEthodConfig');   
+        }
+
+        foreach ($paymentMethodConfigs as $key => $paymentMethodConfig) {
+            if (array_key_exists('paymentMethod', $paymentMethodConfig) && is_array($paymentMethodConfig['paymentMethod'])) {
+                $paymentMethodConfigs[$key]['paymentMethod'] = new PaymentMethod($paymentMethodConfig['paymentMethod']);
+            }   
+            if (array_key_exists('configs', $paymentMethodConfig) && is_array($paymentMethodConfig['configs'])) {
+                $paymentMethodConfigs[$key]['configCollection'] = ConfigCollection::factory($paymentMethodConfig['configs']);
+
+            }
+        }
+        return PaymentMethodConfigCollection::factory($paymentMethodConfigs);
     }
 }

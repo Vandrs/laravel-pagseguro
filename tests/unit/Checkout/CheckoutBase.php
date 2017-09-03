@@ -27,6 +27,7 @@ class CheckoutBase extends \PHPUnit_Framework_TestCase
             'sender' => $this->getSender(),
             'shipping' => $this->getShipping(),
             'acceptedPaymentMethod' => $this->getAcceptedPaymentMethod(),
+            'paymentMethodConfigs' => [$this->getPaymentMethodConfigs()],
             'redirectURL' => 'http://www.meusite.com.br',
             'notificationURL' => 'http://www.meusite.com.br/notification'
         ]);
@@ -105,6 +106,21 @@ class CheckoutBase extends \PHPUnit_Framework_TestCase
             'exclude' => [
                 'paymentMethod' => [
                     'group' => 'BOLETO'
+                ]
+            ]
+        ];
+    }
+
+    public function getPaymentMethodConfigs()
+    {
+        return [
+            'paymentMethod' => [
+                'group' => 'CREDIT_CARD'
+            ],
+            'configs' => [
+                [
+                    'key' => 'vanderson',
+                    'value' => 'nunes'
                 ]
             ]
         ];

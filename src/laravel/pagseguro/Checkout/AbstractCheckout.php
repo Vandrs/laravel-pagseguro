@@ -81,7 +81,7 @@ abstract class AbstractCheckout
             [
                 'items', 'sender', 'shipping', 'currency',
                 'metadata', 'redirectURL', 'notificationURL',
-                'charset', 'acceptedPaymentMethod'
+                'charset', 'acceptedPaymentMethod', 'paymentMethodConfigs'
             ],
             $args
         );

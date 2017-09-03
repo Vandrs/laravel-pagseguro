@@ -23,16 +23,13 @@ class XmlPaymentMethodTest extends \PHPUnit_Framework_TestCase
 
     public function testParse()
     {
-
-        $this->assertTrue(true);
-        /*$paymentMethod = new PaymentMethod([
+        $paymentMethod = new PaymentMethod([
             'group' => 'CREDIT_CARD'
         ]);
         $xmlStr = $this->getXmlForParseTest();
         $xml = new XmlPaymentMethod($paymentMethod);
 
         $this->assertEquals($xmlStr, $xml->getXmlString());
-        */
     }
 
     
